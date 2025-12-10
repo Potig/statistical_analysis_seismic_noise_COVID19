@@ -436,17 +436,22 @@ def perform_analysis():
         print(f"Could not use geopandas for map: {e}")
         use_geopandas = False
 
-    # --- Standard Change Map (Single) ---
+    # --- Standard Change Map (Single - Lockdown Only) ---
     plt.figure(figsize=(15, 8))
+    # Filter for Lockdown period only to show the "quieting"
+    # Using the Period column we created earlier or checking 'condition' if merged
+    # analysis_df has 'Period' from the regression block merge
+    map_plot_data = analysis_df[analysis_df['Period'] == 'Pós-Lockdown (Vermelho)']
+    
     if use_geopandas:
         ax = plt.gca()
         world.plot(ax=ax, color='lightgrey', edgecolor='white')
-        sc = plt.scatter(analysis_df['longitude'], analysis_df['latitude'], 
-                         c=analysis_df['noise_change_pct'], cmap='RdBu_r', 
+        sc = plt.scatter(map_plot_data['longitude'], map_plot_data['latitude'], 
+                         c=map_plot_data['noise_change_pct'], cmap='RdBu_r', 
                          vmin=-50, vmax=50, s=60, alpha=0.9, edgecolor='k', zorder=5)
     else:
-        sc = plt.scatter(analysis_df['longitude'], analysis_df['latitude'], 
-                        c=analysis_df['noise_change_pct'], cmap='RdBu_r', 
+        sc = plt.scatter(map_plot_data['longitude'], map_plot_data['latitude'], 
+                        c=map_plot_data['noise_change_pct'], cmap='RdBu_r', 
                         vmin=-50, vmax=50, s=50, alpha=0.8, edgecolor='k')
     
     plt.colorbar(sc, label='Variação do Ruído (%)', shrink=0.6)
