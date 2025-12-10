@@ -64,6 +64,7 @@ A série temporal abaixo mostra a mediana global da variação do ruído. Note a
 
 ### 4.2 Distribuições de Densidade (Pré vs Pós)
 Comparando as distribuições de probabilidade (KDE), vemos claramente o "deslocamento para a esquerda" (negativo) da curva vermelha (Lockdown), indicando a redução geral da energia sísmica.
+*   **Nota**: Os dados do período de festas (24/Dez a 02/Jan) foram removidos do conjunto "Pré-Lockdown" para evitar vieses de redução de ruído típicos de feriados.
 
 ![Distribution Comparison](distribution_comparison.png)
 

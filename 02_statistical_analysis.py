@@ -131,7 +131,23 @@ def perform_analysis():
     
     # Filter for plotting (exclude extreme outliers visually)
     range_mask = (df['noise_change_pct'] > -150) & (df['noise_change_pct'] < 150)
-    plot_df = df[range_mask]
+    plot_df = df[range_mask].copy()
+
+    # --- Holiday Filter for Pre-Lockdown (User Request) ---
+    # Convert 'date' to datetime objects if not already
+    plot_df['date'] = pd.to_datetime(plot_df['date'])
+    
+    # Define Holiday Period: Dec 24 to Jan 02
+    start_holiday = pd.Timestamp('2019-12-24')
+    end_holiday = pd.Timestamp('2020-01-02')
+    
+    # Filter Condition: Keep if NOT (Pre-Lockdown AND is_in_holiday_window)
+    holiday_mask = (plot_df['condition'] == 'Pre-Lockdown') & \
+                   (plot_df['date'] >= start_holiday) & \
+                   (plot_df['date'] <= end_holiday)
+    
+    # Keep rows where holiday_mask is False
+    plot_df = plot_df[~holiday_mask]
     
     # Use KDE Plot for cleaner curves (as requested by user preference in other plot)
     # Explicitly defining legend
@@ -170,7 +186,19 @@ def perform_analysis():
     # filtering to 1st-99th percentile usually removes extreme transient spikes
     q_low = df['noise_change_pct'].quantile(0.01)
     q_high = df['noise_change_pct'].quantile(0.99)
-    df_filtered = df[(df['noise_change_pct'] > q_low) & (df['noise_change_pct'] < q_high)]
+    df_filtered = df[(df['noise_change_pct'] > q_low) & (df['noise_change_pct'] < q_high)].copy()
+
+    # --- Holiday Filter for Pre-Lockdown (Violin) ---
+    df_filtered['date'] = pd.to_datetime(df_filtered['date'])
+    # Holiday Period: Dec 24 to Jan 02
+    start_holiday = pd.Timestamp('2019-12-24')
+    end_holiday = pd.Timestamp('2020-01-02')
+    
+    holiday_mask_violin = (df_filtered['condition'] == 'Pre-Lockdown') & \
+                          (df_filtered['date'] >= start_holiday) & \
+                          (df_filtered['date'] <= end_holiday)
+                          
+    df_filtered = df_filtered[~holiday_mask_violin]
     
     # Violin Plot (The "Bell")
     sns.violinplot(data=df_filtered, x='condition', y='noise_change_pct', 
