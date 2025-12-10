@@ -17,7 +17,7 @@ Representa a energia média da vibração do solo em um dia.
 *   **Unidade**: Metros (m) ou Nanometros (nm).
 *   **Filtro**: Focamos na banda **4.0 - 14.0 Hz**, que é a "assinatura" da atividade humana.
 
-### Variável de Estudo: Variação Percentual (`noise_change_pct`)
+### Variável de Estudo: Variação Percentual (`noise\_change\_pct`)
 Para comparar estações com níveis de ruído muito diferentes (ex: uma estação urbana barulhenta vs uma rural silenciosa), normalizamos os dados calculando a variação percentual em relação a uma **Baseline**.
 
 $$
@@ -70,7 +70,7 @@ Comparando as distribuições de probabilidade (KDE), vemos claramente o "desloc
 
 ### 4.2.1 Distribuição Detalhada (Violin Plot + Pontos)
 Para uma visualização mais rica da distribuição dos dados, utilizamos um **Violin Plot** (formato de sino) com os pontos individuais sobrepostos.
-*   **Variável Analisada**: `noise_change_pct` (Variação percentual do ruído em relação à baseline).
+*   **Variável Analisada**: `noise\_change\_pct` (Variação percentual do ruído em relação à baseline).
 *   **Interpretação**: A largura do "sino" mostra a densidade de estações. Note como em "Lockdown" (Azul), o sino desce para valores negativos, indicando a redução generalizada do ruído. Os pontos pretos representam as estações individuais amostradas.
 
 ![Violin Plot Distribution](violin_noise_distribution.png)
