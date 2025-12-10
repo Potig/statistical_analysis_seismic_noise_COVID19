@@ -161,6 +161,36 @@ def perform_analysis():
 
 
 
+    # --- NEW: Violin Plot (Bell-shaped Boxplot) with Points ---
+    print("\n--- Section: Violin Plot (Distribution with Points) ---")
+    plt.figure(figsize=(10, 6))
+    
+    # Violin Plot (The "Bell")
+    sns.violinplot(data=df, x='condition', y='noise_change_pct', 
+                   inner=None, palette={'Pre-Lockdown': 'lightgray', 'Lockdown': 'skyblue'})
+    
+    # Strip Plot (The Points)
+    # Subsample data to avoid overcrowded plot if necessary (N > 5000)
+    sample_df = df.sample(2000) if len(df) > 2000 else df
+    sns.stripplot(data=sample_df, x='condition', y='noise_change_pct', 
+                  color='k', size=2, alpha=0.3, jitter=True)
+    
+    # Add Boxplot inside for quartiles reference (optional, but standard in violin)
+    sns.boxplot(data=df, x='condition', y='noise_change_pct', 
+                width=0.2, boxprops={'zorder': 2, 'facecolor':'none'},
+                whiskerprops={'color':'k'}, medianprops={'color':'red'})
+
+    plt.axhline(0, color='black', linestyle='--', linewidth=1)
+    
+    plt.title('Distribuição da Variação do Ruído (Violin + Pontos)')
+    plt.ylabel('Variação do Ruído (%)')
+    plt.xlabel('Período')
+    plt.grid(True, axis='y', alpha=0.3)
+    
+    plt.savefig('violin_noise_distribution.png', dpi=300)
+    plt.close()
+    print("Violin plot saved to 'violin_noise_distribution.png'")
+
     # 3. Correlation / Regression (Population Density vs Mean % Drop)
     # Regression Analysis: Population Density vs Median % Drop (Pre vs Post)
     print("\n--- Section: Regression Analysis (Pre vs Post) ---")

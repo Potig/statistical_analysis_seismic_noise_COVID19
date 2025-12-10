@@ -67,6 +67,13 @@ Comparando as distribuições de probabilidade (KDE), vemos claramente o "desloc
 
 ![Distribution Comparison](distribution_comparison.png)
 
+### 4.2.1 Distribuição Detalhada (Violin Plot + Pontos)
+Para uma visualização mais rica da distribuição dos dados, utilizamos um **Violin Plot** (formato de sino) com os pontos individuais sobrepostos.
+*   **Variável Analisada**: `noise_change_pct` (Variação percentual do ruído em relação à baseline).
+*   **Interpretação**: A largura do "sino" mostra a densidade de estações. Note como em "Lockdown" (Azul), o sino desce para valores negativos, indicando a redução generalizada do ruído. Os pontos pretos representam as estações individuais amostradas.
+
+![Violin Plot Distribution](violin_noise_distribution.png)
+
 ### 4.3 Visão Espacial: Distribuição das Mudanças
 Mapa global mostrando a localização das estações e a variação média do ruído.
 *   **Azul**: Estações onde o ruído **diminuiu** (maioria esmagadora).
