@@ -67,21 +67,12 @@ Comparando as distribuições de probabilidade (KDE), vemos claramente o "desloc
 
 ![Distribution Comparison](distribution_comparison.png)
 
-### 4.3 Visão Espacial: O "Apagão" Sísmico
-Comparação lado-a-lado dos níveis absolutos de ruído.
-*   **Esquerda (Pré)**: Estações "quentes" (amarelo/laranja) indicam alta atividade.
-*   **Direita (Pós)**: O mapa "esfria" (roxo/preto), visualizando o silêncio global.
+### 4.3 Visão Espacial: Distribuição das Mudanças
+Mapa global mostrando a localização das estações e a variação média do ruído.
+*   **Azul**: Estações onde o ruído **diminuiu** (maioria esmagadora).
+*   **Vermelho**: Estações onde o ruído aumentou (raras).
 
-![Spatial Comparison](spatial_comparison_pre_post.png)
-
-#### Detalhamento Regional (Triangulação Linear)
-Zoom nas regiões com maior densidade de estações (Europa e América do Norte), interpolando os dados para visualizar a mancha de redução de ruído.
-
-| Europa | América do Norte |
-| :---: | :---: |
-| ![Europe](interpolation_Europe.png) | ![North America](interpolation_North_America.png) |
-
-*(Nota: A interpolação linear revela como o silêncio se espalhou pelos continentes, correlacionando-se com áreas densamente povoadas.)*
+![Spatial Map Change](spatial_map_change.png)
 
 ### 4.4 Séries Temporais Detalhadas (Heatmap e Record Section)
 Para visualizar todas as estações simultaneamente, ordenamos elas por Latitude (Norte -> Sul). A faixa azul vertical (Março-Maio) é consistente em quase todas as latitudes, provando que o fenômeno foi global, não local.
