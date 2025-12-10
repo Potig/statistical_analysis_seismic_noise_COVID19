@@ -165,24 +165,34 @@ def perform_analysis():
     print("\n--- Section: Violin Plot (Distribution with Points) ---")
     plt.figure(figsize=(10, 6))
     
+    # Filter Outliers for better Visualization (User Request)
+    # outliers stretch the axis and hide the boxplot structure
+    # filtering to 1st-99th percentile usually removes extreme transient spikes
+    q_low = df['noise_change_pct'].quantile(0.01)
+    q_high = df['noise_change_pct'].quantile(0.99)
+    df_filtered = df[(df['noise_change_pct'] > q_low) & (df['noise_change_pct'] < q_high)]
+    
     # Violin Plot (The "Bell")
-    sns.violinplot(data=df, x='condition', y='noise_change_pct', 
+    sns.violinplot(data=df_filtered, x='condition', y='noise_change_pct', 
                    inner=None, palette={'Pre-Lockdown': 'lightgray', 'Lockdown': 'skyblue'})
     
     # Strip Plot (The Points)
-    # Subsample data to avoid overcrowded plot if necessary (N > 5000)
-    sample_df = df.sample(2000) if len(df) > 2000 else df
+    # Subsample filtered data
+    sample_df = df_filtered.sample(2000) if len(df_filtered) > 2000 else df_filtered
     sns.stripplot(data=sample_df, x='condition', y='noise_change_pct', 
                   color='k', size=2, alpha=0.3, jitter=True)
     
-    # Add Boxplot inside for quartiles reference (optional, but standard in violin)
-    sns.boxplot(data=df, x='condition', y='noise_change_pct', 
-                width=0.2, boxprops={'zorder': 2, 'facecolor':'none'},
-                whiskerprops={'color':'k'}, medianprops={'color':'red'})
+    # Add Boxplot inside
+    # Since we filtered extreme outliers, the box should be clearly visible now
+    sns.boxplot(data=df_filtered, x='condition', y='noise_change_pct', 
+                width=0.15, boxprops={'zorder': 2, 'facecolor':'none', 'linewidth': 1.5},
+                whiskerprops={'color':'k', 'linewidth': 1.5}, 
+                medianprops={'color':'red', 'linewidth': 2},
+                showfliers=False) # Hide fliers in the boxplot itself too
 
     plt.axhline(0, color='black', linestyle='--', linewidth=1)
     
-    plt.title('Distribuição da Variação do Ruído (Violin + Pontos)')
+    plt.title('Distribuição da Variação do Ruído (Sem Outliers Extremos)')
     plt.ylabel('Variação do Ruído (%)')
     plt.xlabel('Período')
     plt.grid(True, axis='y', alpha=0.3)
